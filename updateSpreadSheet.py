@@ -14,9 +14,12 @@ def main(args):
     sourceDf = sourceFile.parse(sourceFile.sheet_names[0])
     target = '/ccnc/MRIspreadsheet/MRI.xls'
 
-    if args.study:
-        updateSpreadSheet(sourceDf,target,'studyName')
-    else:
+    try:
+        if args.study:
+            updateSpreadSheet(sourceDf,target,'studyName')
+        else:
+            updateSpreadSheet(sourceDf,target,'group')
+    except:
         updateSpreadSheet(sourceDf,target,'group')
 
     #styling
@@ -68,6 +71,7 @@ def updateSpreadSheet(df,target,divideBy):
         dataFrame.to_excel(writer,group)
 
     writer.save()
+    os.chmod(target, 666)
 
 
 if __name__=='__main__':
